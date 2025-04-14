@@ -1,0 +1,130 @@
+1. 추상화 (Abstraction)
+설명
+복잡한 내부 구현은 숨기고, **필요한 기능(인터페이스/동작)**만 외부에 노출하는 것.
+
+목적
+코드의 복잡도 감소
+변경 시 유지보수 용이
+다형성을 활용하기 위한 기반
+
+예시
+abstract class Animal {
+    abstract void sound(); // 어떤 소리인지는 모름. "소리를 낸다"는 행위만 추상적으로 정의
+}
+
+class Dog extends Animal {
+    void sound() {
+        System.out.println("멍멍!");
+    }
+}
+
+class Cat extends Animal {
+    void sound() {
+        System.out.println("야옹~");
+    }
+}
+이렇게 하면 Animal을 사용하는 다른 클래스는 Dog인지 Cat인지 몰라도 sound()만 호출하면 됨.
+
+
+2. 캡슐화 (Encapsulation)
+설명
+데이터(필드)를 직접 접근하지 못하게 은닉하고, 메서드로 제어하는 것.
+
+목적
+데이터 보호
+불필요한 접근 제한으로 오류 방지
+코드 변경에 유연함
+
+예시
+class Person {
+    private String name; // 외부에서 직접 접근 불가
+
+    public void setName(String name) { // 유효성 체크도 가능
+        this.name = name;
+    }
+
+    public String getName() {
+        return this.name;
+    }
+}
+이렇게 하면 name에 잘못된 값이 들어가는 것을 방지할 수 있음.
+
+3. 상속 (Inheritance)
+설명:
+기존 클래스의 속성과 기능을 물려받아 재사용하는 것.
+
+목적
+코드 재사용성 향상
+공통 기능을 부모 클래스에 정의하여 중복 제거
+유지보수가 쉬움
+
+예시
+class Vehicle {
+    void move() {
+        System.out.println("움직인다.");
+    }
+}
+
+class Car extends Vehicle {
+    void horn() {
+        System.out.println("빵빵!");
+    }
+}
+Car는 Vehicle의 기능을 그대로 사용하면서 자신만의 기능도 추가 가능.
+
+
+4. 다형성 (Polymorphism)
+설명
+같은 타입(부모 클래스나 인터페이스)으로 여러 형태의 객체를 다룰 수 있는 것.
+
+목적
+유연한 코드 구성
+객체 간 의존성 감소 (인터페이스 기반 프로그래밍)
+유지보수 및 확장에 유리
+
+예시
+class Animal {
+    void sound() {
+        System.out.println("동물 소리");
+    }
+}
+
+class Dog extends Animal {
+    void sound() {
+        System.out.println("멍멍!");
+    }
+}
+
+class Cat extends Animal {
+    void sound() {
+        System.out.println("야옹~");
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Animal a1 = new Dog();
+        Animal a2 = new Cat();
+
+        a1.sound(); // 멍멍!
+        a2.sound(); // 야옹~
+    }
+}
+
+오버라이딩 (Overriding)
+정의
+상속 관계에서 부모 클래스의 메서드를 자식 클래스가 재정의하는 것.
+
+목적
+부모의 기능을 자식 클래스에 맞게 수정하고자 할 때 사용
+다형성 구현의 핵심
+
+
+오버로딩 (Overloading)
+정의
+같은 클래스 내에서 이름은 같지만 매개변수가 다른 메서드를 여러 개 정의하는 것.
+
+목적
+같은 동작을 다양한 방식으로 처리하고 싶을 때 사용 (입력값이 다를 경우 등)
+
+
