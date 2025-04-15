@@ -2,7 +2,7 @@
 함수	            설명	                                예시
 COUNT()	      행 개수(갯수) 계산	                        COUNT(*), COUNT(컬럼)
 SUM()	        합계 계산	                                SUM(salary)
-AVG()	        평균 계산	                                AVG(score)
+AVG()	        평균 계산	                                AVG(score) 
 MAX()	        최대값                                	    MAX(age)
 MIN()	        최소값                                	    MIN(price)
 LISTAGG()	    값을 구분자로 묶어서 하나의 문자열로 만듦	  LISTAGG(name, ',')
