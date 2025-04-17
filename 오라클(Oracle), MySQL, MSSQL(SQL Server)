@@ -1,0 +1,53 @@
+1. 기본 정보 및 소유
+항목					Oracle					MySQL									MSSQL
+개발사				Oracle Corporation		현재는 Oracle이 인수 (원래는 MySQL AB)		Microsoft
+라이선스	상용 (유료) + 일부 무료 버전 (Express 등)	오픈소스 (GPL, 일부 상용도 있음)				상용 (Express는 무료)
+운영 체제	리눅스, 유닉스, 윈도우 등 다양				리눅스, 유닉스, 윈도우 등 다양					주로 윈도우 (Linux도 일부 지원)
+
+2. 문법 및 기능 차이
+데이터 타입
+Oracle: VARCHAR2, NUMBER, DATE
+MySQL: VARCHAR, INT, DATETIME
+MSSQL: VARCHAR, INT, DATETIME, UNIQUEIDENTIFIER 등
+
+자동 증가 컬럼
+Oracle: SEQUENCE + TRIGGER (12c 이상은 IDENTITY 지원)
+MySQL: AUTO_INCREMENT
+MSSQL: IDENTITY(1,1)
+
+문자열 결합
+Oracle: 'Hello' || 'World'
+MySQL: CONCAT('Hello', 'World')
+MSSQL: 'Hello' + 'World'
+
+LIMIT 처리 (행 제한)
+Oracle: ROWNUM, FETCH FIRST n ROWS ONLY
+MySQL: LIMIT 10
+MSSQL: TOP 10, OFFSET-FETCH
+
+NULL 처리
+Oracle: NVL(col, 'default')
+MySQL: IFNULL(col, 'default')
+MSSQL: ISNULL(col, 'default')
+
+3. 성능 및 확장성
+항목					Oracle								MySQL										MSSQL
+트랜잭션 안정성			매우 우수 (대규모 기업용)	기				본적 수준 (InnoDB 기준)							우수 (기업용에 적합)
+병렬 처리 / 클러스터링	RAC(Real Application Cluster) 지원	기본 Master-Slave, Cluster도 가능				AlwaysOn, 클러스터링 지원
+파티셔닝, 인덱스 기능	고급 기능 매우 풍부						상대적으로 단순									꽤 강력하나 Oracle보다는 제한적
+
+4. 운영 및 사용성
+항목				Oracle							MySQL					MSSQL
+관리 도구			Oracle Enterprise Manager		MySQL Workbench			SSMS(SQL Server Management Studio)
+학습 난이도		높음 (복잡하고 강력함)				낮음 (초보자도 접근 가능)		중간 (GUI 친화적)
+사용 주체			금융, 제조, 공공 등 대기업			스타트업, 웹서비스 등		기업용 ERP, CRM 등 MS 기반 환경
+
+5. 커뮤니티 및 활용 사례
+항목					Oracle					MySQL							MSSQL
+커뮤니티				크지만 기술 지원은 주로 유료	매우 활발, 오픈소스 기반				MS 기반 사용자 커뮤니티 활발
+활용처				금융권, 대기업 시스템, ERP	웹서비스, 블로그, 스타트업			.NET 기반 기업 시스템, 공공기관
+
+요약
+Oracle: 엔터프라이즈급 복잡한 시스템 / 금융, 대규모 데이터
+MySQL: 가볍고 빠른 웹서비스 / 스타트업, 개인 프로젝트
+MSSQL: .NET 기반 환경 / ERP, MS 친화적 시스템
