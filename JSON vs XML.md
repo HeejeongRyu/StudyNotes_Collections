@@ -31,6 +31,7 @@
 
 ### 📄 XML 예시
 
+```xml
 <person>
   <name>John</name>
   <age>30</age>
