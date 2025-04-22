@@ -63,6 +63,9 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.CREATED).body(created);
     }
 }
+
+---
+
 ✅ GET vs POST 차이점
 항목	GET	POST
 목적	리소스 조회	리소스 생성 또는 데이터 전송
