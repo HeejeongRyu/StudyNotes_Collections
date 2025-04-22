@@ -64,7 +64,7 @@ public class UserController {
     }
 }
 
----
+```
 
 ✅ GET vs POST 차이점
 항목	GET	POST
