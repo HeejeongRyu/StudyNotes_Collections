@@ -93,15 +93,6 @@
 | 연결 프로토콜 | Type jeus 지정 | protocol=jeus 지정 |
 | 장애 대비 | 여러 서버 등록 (Failover 가능) | Thread 수, Connection 수 튜닝 |
 
----
-
-## 🧠 참고: WebtoB와 Apache 차이
-
-| 항목 | WebtoB | Apache/Nginx |
-|:---|:---|
-| 최적화 대상 | JEUS 전용 최적화 | 다양한 백엔드 지원 |
-| 연결방식 | JEUS 프로토콜 직접 지원 | HTTP 리버스 프록시 방식 |
-| SSL 처리 | 직접 가능 | 모듈 사용 (mod_ssl) |
 
 ---
 
