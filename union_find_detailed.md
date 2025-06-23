@@ -1,120 +1,98 @@
 
-# 📘 유니온 파인드 (Union-Find) - 분리 집합 알고리즘
+# 📘 유니온 파인드(Disjoint Set Union, Union-Find) 알고리즘
 
 ---
 
 ## ✅ 1. 유니온 파인드란?
 
-> 유니온 파인드(Union-Find) 알고리즘은 **서로소 집합(Disjoint Set)** 자료구조를 구현하는 알고리즘입니다.
+> 유니온 파인드(또는 분리 집합, Disjoint Set)는 원소들이 어떤 집합에 속해 있는지 빠르게 확인하고, 두 집합을 하나로 합치는 연산을 빠르게 수행할 수 있도록 도와주는 자료구조입니다.
 
-- 여러 개의 노드가 **서로 다른 집합에 속해 있는지 판단**하거나,
-- 두 노드를 **같은 집합으로 합치는 연산**을 수행합니다.
+- 그래프의 **사이클 판별**, **네트워크 연결성 판단** 등에서 활용
+- 대표적인 **상호 배타적 집합(Mutually Exclusive Set)** 알고리즘
 
 ---
 
-## ✅ 2. 주요 연산
+## ✅ 2. 핵심 연산
 
 | 연산 | 설명 |
 |------|------|
-| Find | 특정 원소가 속한 집합 찾기 (루트 노드) |
-| Union | 두 원소가 속한 집합을 하나로 합치기 |
+| `find(x)` | 원소 x가 속한 **대표(부모)** 노드를 찾음 |
+| `union(x, y)` | 원소 x와 y가 속한 **집합을 합침** |
 
 ---
 
-## ✅ 3. 대표 사용 사례
+## ✅ 3. 동작 원리
 
-- **그래프 사이클 판별**
-- **크루스칼 알고리즘** (최소 신장 트리)
-- **네트워크 연결 여부 판단**
+1. 각각의 노드는 자기 자신을 부모로 가짐
+2. `find` 연산은 **루트 노드**를 찾아 반환
+3. `union` 연산은 두 루트 노드를 연결 (작은 트리 → 큰 트리에 붙이기)
+4. 최적화를 위해 **경로 압축(Path Compression)**과 **랭크 정렬(Union by Rank)** 사용
 
 ---
 
-## ✅ 4. Python 기본 구현
+## ✅ 4. 기본 구현 예시 (Python)
 
 ```python
 # 초기화
-def make_set(n):
-    return [i for i in range(n)]
+parent = [i for i in range(10)]
 
-# Find: 경로 압축 적용
-def find(parent, x):
+def find(x):
     if parent[x] != x:
-        parent[x] = find(parent, parent[x])
+        parent[x] = find(parent[x])  # 경로 압축
     return parent[x]
 
-# Union
-def union(parent, a, b):
-    root_a = find(parent, a)
-    root_b = find(parent, b)
-    if root_a != root_b:
-        parent[root_b] = root_a
+def union(x, y):
+    root_x = find(x)
+    root_y = find(y)
+
+    if root_x != root_y:
+        parent[root_y] = root_x  # y 루트를 x 루트에 붙임
 ```
 
 ---
 
-## ✅ 5. 예제
+## ✅ 5. 사용 예시: 사이클 판별
 
 ```python
-parent = make_set(7)
-union(parent, 1, 2)
-union(parent, 2, 3)
-union(parent, 4, 5)
+edges = [(1, 2), (2, 3), (3, 4), (4, 1)]  # 사이클 있음
 
-print(find(parent, 1))  # 1
-print(find(parent, 3))  # 1
-print(find(parent, 4))  # 4
-print(find(parent, 5))  # 4
-print(find(parent, 6))  # 6
+parent = [i for i in range(5)]
+
+def has_cycle(edges):
+    for a, b in edges:
+        if find(a) == find(b):
+            return True  # 사이클 발생
+        union(a, b)
+    return False
+
+print(has_cycle(edges))  # 출력: True
 ```
 
 ---
 
 ## ✅ 6. 시간 복잡도
 
-| 연산 | 복잡도 |
-|------|--------|
-| Find (경로 압축 사용) | 거의 O(1) |
-| Union (크기/랭크 고려) | 거의 O(1) |
-
-- 실제 시간 복잡도는 **O(α(n))**으로 거의 상수에 가까움 (α는 아커만 함수의 역함수)
+- **`find`/`union` 연산 평균 시간 복잡도**: O(α(N))  
+  (여기서 α는 아커만 함수의 역함수로 거의 상수에 가까움)
 
 ---
 
-## ✅ 7. 경로 압축 & 랭크 최적화
+## ✅ 7. 활용 문제
 
-### 경로 압축(Path Compression)
-- Find 시 루트 노드를 부모로 직접 설정 → 트리 높이 줄어듦
-
-### 랭크 기반 유니온(Rank Union)
-- 노드 수(또는 트리 깊이)가 더 낮은 쪽을 큰 쪽에 붙임
-
----
-
-## ✅ 8. 그래프 사이클 판별 예시
-
-```python
-edges = [(1, 2), (1, 3), (2, 3)]  # 사이클 존재
-parent = make_set(4)
-
-cycle = False
-for a, b in edges:
-    if find(parent, a) == find(parent, b):
-        cycle = True
-        break
-    union(parent, a, b)
-
-print("사이클 존재" if cycle else "사이클 없음")
-```
+| 문제 유형 | 예시 |
+|-----------|------|
+| 사이클 탐지 | 그래프 내 루프 확인 |
+| 네트워크 연결 여부 | 같은 집합인지 확인 |
+| 크루스칼 MST 알고리즘 | 최소 신장 트리에서 간선 선택 시 |
 
 ---
 
 ## 🎯 마무리 요약
 
-| 항목 | 내용 |
+| 항목 | 설명 |
 |------|------|
-| 알고리즘명 | 유니온 파인드 (Disjoint Set) |
-| 주요 연산 | Union, Find |
-| 최적화 | 경로 압축 + 랭크 |
-| 활용 분야 | 사이클 탐지, MST(크루스칼), 그룹 판별 |
-| 시간 복잡도 | O(α(n)) (거의 O(1)) |
+| 알고리즘명 | 유니온 파인드 (Disjoint Set, Union-Find) |
+| 핵심 연산 | `find`, `union` |
+| 시간 복잡도 | O(α(N)) |
+| 대표 활용 | 사이클 탐지, 집합 병합, MST |
 
